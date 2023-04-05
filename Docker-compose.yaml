@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+   redis:
+      image: redis:alpine
+      ports:
+       - 6379:6379
+      networks:
+         - my-bridge-network
+   app:
+      image: my-app-image:1.1
+      stop_signal: SIGINT
+      ports:
+        - 8000:8000
+      tty: true
+      depends_on:
+         - redis
+      networks:
+         - my-bridge-network
+networks:
+ my-bridge-network:
